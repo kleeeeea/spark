@@ -92,4 +92,6 @@ if [[ -n "$SPARK_TESTING" ]]; then
   exit
 fi
 
-exec "${SPARK_HOME}"/bin/spark-submit pyspark-shell-main --name "PySparkShell" "$@"
+#exec "${SPARK_HOME}"/bin/spark-submit pyspark-shell-main --name "PySparkShell" "$@"
+exec "${SPARK_HOME}"/bin/spark-submit --conf spark.driver.extraJavaOptions=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005 /Users/keqianli/github_repos/spark/examples/src/main/python/mllib/gaussian_mixture_model.py --name "PySparkShell" "$@"   -c spark.driver.bindAddress=localhost  --master local
+# pyspark-shell-main
