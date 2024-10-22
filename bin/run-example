@@ -50,10 +50,9 @@
 #scalac -cp assembly/target/scala-2.13/jars/*.jar /Users/keqianli/github_repos/spark/src/main/scala/org/apache/spark/examples/Hello.scala -d Hello.jar
 
 # export PATH="/Users/keqianli/homebrew/opt/scala@2.12/bin:$PATH";scala
-cd ~/klee_code/spark-hello-world
-#sbt assembly
+cd ~/github_repos/spark-hello-world/
 #brew install scala@2.13
-JARFILE=`pwd`/target/scala-2.13/HelloWorld-assembly-0.1.0.jar
+sbt assembly
 #spark-submit --class HelloWorld --master local $JARFILE
 
 cd /Users/keqianli/github_repos/spark/
@@ -65,9 +64,15 @@ export SPARK_MASTER_HOST='localhost'
 
 export PATH="/Users/keqianli/homebrew/opt/scala@2.13/bin:$PATH"
 #--conf spark.driver.extraJavaOptions=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005
-#"${SPARK_HOME}"/bin/spark-submit --class HelloWorld --master local $JARFILE
+
+# JAR containing a simple hello world
+JARFILE=`pwd`/target/scala-2.12/HelloWorld-assembly-0.1.0.jar
+
+# Run it locally
+${SPARK_HOME}/bin/spark-submit --class HelloWorld --master local $JARFILE
+
 #"${SPARK_HOME}"/bin/pyspark  -c spark.driver.bindAddress=localhost  --master local
-"${SPARK_HOME}"/bin/pyspark
+#"${SPARK_HOME}"/bin/pyspark
 
 #"${SPARK_HOME}"/bin/
 #--class org.apache.spark.examples.Hello --master local Hello.jar
