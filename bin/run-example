@@ -50,26 +50,36 @@
 #scalac -cp assembly/target/scala-2.13/jars/*.jar /Users/keqianli/github_repos/spark/src/main/scala/org/apache/spark/examples/Hello.scala -d Hello.jar
 
 # export PATH="/Users/keqianli/homebrew/opt/scala@2.12/bin:$PATH";scala
-cd ~/github_repos/spark-hello-world/
-#brew install scala@2.13
-sbt assembly
-#spark-submit --class HelloWorld --master local $JARFILE
 
-cd /Users/keqianli/github_repos/spark/
+#!/usr/bin/env bash
+
+#
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
 if [ -z "${SPARK_HOME}" ]; then
   source "$(dirname "$0")"/find-spark-home
 fi
-export SPARK_MASTER_HOST='localhost'
 
-
-export PATH="/Users/keqianli/homebrew/opt/scala@2.13/bin:$PATH"
-#--conf spark.driver.extraJavaOptions=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005
-
+export _SPARK_CMD_USAGE="Usage: ./bin/run-example [options] example-class [example args]"
+exec "${SPARK_HOME}"/bin/spark-submit  run-example   -c spark.driver.bindAddress=localhost ``"$@"
 # JAR containing a simple hello world
-JARFILE=`pwd`/target/scala-2.12/HelloWorld-assembly-0.1.0.jar
 
 # Run it locally
-${SPARK_HOME}/bin/spark-submit --class HelloWorld --master local $JARFILE
+# --conf spark.driver.extraJavaOptions=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005
 
 #"${SPARK_HOME}"/bin/pyspark  -c spark.driver.bindAddress=localhost  --master local
 #"${SPARK_HOME}"/bin/pyspark
