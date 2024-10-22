@@ -92,4 +92,4 @@ if [[ -n "$SPARK_TESTING" ]]; then
   exit
 fi
 
-exec "${SPARK_HOME}"/bin/spark-submit /Users/keqianli/klee_code/spark_code/Pyspark/_data/hello.py --name "PySparkShell" "$@" -c spark.driver.bindAddress=localhost  --master local
+exec "${SPARK_HOME}"/bin/spark-submit -c spark.driver.bindAddress=localhost  --master local /Users/keqianli/klee_code/spark_code/Pyspark/_data/hello.py --name "PySparkShell" "$@"
