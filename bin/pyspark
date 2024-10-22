@@ -36,7 +36,7 @@ if [[ -n "$IPYTHON" || -n "$IPYTHON_OPTS" ]]; then
   echo "IPYTHON and IPYTHON_OPTS are removed in Spark 2.0+. Remove these from the environment and set PYSPARK_DRIVER_PYTHON and PYSPARK_DRIVER_PYTHON_OPTS instead."
   exit 1
 fi
-export PYSPARK_PYTHON=/Users/keqianli/anaconda3/bin/python
+
 # Default to standard python3 interpreter unless told otherwise
 if [[ -z "$PYSPARK_PYTHON" ]]; then
   PYSPARK_PYTHON=python3
@@ -74,7 +74,7 @@ else
     fi
   fi
 fi
-echo $PYTHONPATH
+
 # Add the PySpark classes to the Python path:
 export PYTHONPATH="${SPARK_HOME}/python/:$PYTHONPATH"
 export PYTHONPATH="${SPARK_HOME}/python/lib/py4j-0.10.9.7-src.zip:$PYTHONPATH"
@@ -92,7 +92,4 @@ if [[ -n "$SPARK_TESTING" ]]; then
   exit
 fi
 
-#exec "${SPARK_HOME}"/bin/spark-submit pyspark-shell-main --name "PySparkShell" "$@"
-exec "${SPARK_HOME}"/bin/spark-submit /Users/keqianli/github_repos/spark/examples/src/main/python/mllib/gaussian_mixture_model.py --name "PySparkShell" "$@"   -c spark.driver.bindAddress=localhost  --master local
-# pyspark-shell-main
-# --conf spark.driver.extraJavaOptions=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005
+exec "${SPARK_HOME}"/bin/spark-submit pyspark-shell-main --name "PySparkShell" "$@" -c spark.driver.bindAddress=localhost  --master local
